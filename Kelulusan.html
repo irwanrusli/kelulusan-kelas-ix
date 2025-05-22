@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pengumuman Kelulusan</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #3f87a6, #ebf8e1, #f69d3c);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      max-width: 500px;
+      width: 100%;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      background-color: #f0f0f0;
+      display: none;
+    }
+    .not-found {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Pengumuman Kelulusan</h2>
+  <input type="text" id="name" placeholder="Masukkan Nama Lengkap" />
+  <input type="date" id="dob" />
+  <button onclick="checkGraduation()">Cek Kelulusan</button>
+
+  <div class="result" id="resultBox">
+    <div id="result"></div>
+  </div>
+</div>
+
+<script>
+  const students = [
+    { nama: "AKBAR BAHARUDDIN", nisn: "0092907836", tanggal: "2009-08-05", nilai: 90, status: "LULUS" },
+    { nama: "DIMAS", nisn: "0091972588", tanggal: "2009-06-05", nilai: 82, status: "LULUS" },
+    { nama: "FAIZ", nisn: "0094028133", tanggal: "2009-08-30", nilai: 92, status: "LULUS" },
+    { nama: "FITRAH RAMADHAN", nisn: "0108534336", tanggal: "2010-06-05", nilai: 89, status: "LULUS" },
+    { nama: "HAFIDZA AMELIYA", nisn: "3095697252", tanggal: "2009-11-21", nilai: 95, status: "LULUS" }
+  ];
+
+  function checkGraduation() {
+    const inputName = document.getElementById("name").value.trim().toUpperCase();
+    const inputDate = document.getElementById("dob").value;
+    const resultBox = document.getElementById("resultBox");
+    const result = document.getElementById("result");
+
+    const student = students.find(
+      s => s.nama === inputName && s.tanggal === inputDate
+    );
+
+    if (student) {
+      result.innerHTML = `
+        <p><strong>Nama:</strong> ${student.nama}</p>
+        <p><strong>NISN:</strong> ${student.nisn}</p>
+        <p><strong>Tanggal Lahir:</strong> ${new Date(student.tanggal).toLocaleDateString('id-ID')}</p>
+        <p><strong>Rata-rata Nilai:</strong> ${student.nilai}</p>
+        <p><strong>Status:</strong> <span style="color: green; font-weight: bold;">${student.status}</span></p>
+      `;
+    } else {
+      result.innerHTML = `<p class="not-found">Data tidak ditemukan. Periksa kembali nama dan tanggal lahir Anda.</p>`;
+    }
+
+    resultBox.style.display = "block";
+  }
+</script>
+
+</body>
+</html>
